@@ -13,7 +13,7 @@ class ProjectsController < ApplicationController
       @projects = @projects.where("name like ?", "%#{params[:search]}%")
     end
     # ... rest of the method stays the same
-    
+    @projects = @projects.order(updated_at: :desc)
     # Status counts for tabs - Updated to show 'new' in UI but count 'draft' in DB
     @status_counts = Project.group(:status).count
     @status_counts['new'] = @status_counts.delete('draft') || 0  # Show as 'new' in UI

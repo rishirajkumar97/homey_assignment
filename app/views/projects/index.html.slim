@@ -60,6 +60,7 @@
               th.px-6.py-3.text-left.text-xs.font-medium.text-gray-500.uppercase.tracking-wider Status
               th.px-6.py-3.text-left.text-xs.font-medium.text-gray-500.uppercase.tracking-wider Creator
               th.px-6.py-3.text-left.text-xs.font-medium.text-gray-500.uppercase.tracking-wider Created
+              th.px-6.py-3.text-left.text-xs.font-medium.text-gray-500.uppercase.tracking-wider Updated
           
           tbody.bg-white.divide-y.divide-gray-200
             - @projects.each do |project|
@@ -75,6 +76,8 @@
                   = project.creator.display_name
                 td.px-6.py-4.whitespace-nowrap.text-sm.text-gray-500
                   = project.created_at.strftime("%b %d, %Y")
+                td.px-6.py-4.whitespace-nowrap.text-sm.text-gray-500
+                  = project.updated_at.strftime("%b %d, %Y")
     
     / Pagination
     - if @projects.respond_to?(:current_page)
