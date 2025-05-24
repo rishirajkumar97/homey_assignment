@@ -22,34 +22,36 @@
 - Yes in the near future we may see more types of activities in the project history list, but for the MVP lets just stick to comment and get iterative feedback from our users.
 
 
-
-
 # Local Setup
 
-## System dependencies
+## System dependencies:
 
 - Ruby 3.2.2
 - Rails 7.2
 - Postgresgql@14(local,test) or cockroachdb (for production)
 
 
-### Configuration \
+### Configuration:
 - Install ruby via rvm with command ```rvm install ruby-3.2.2```
 
 
-### Database creation \
+### Database creation:
 - Command: ``` rails db:create ```
 
-### Database initialization \
+### Database initialization
 - Command: ``` rails db:migrate; rails db:seed; ```
 
-### How to run the test suite \
+### How to run the test suite
 - Command: ``` bundle exec rspec ```
 
-### Services (job queues, cache servers, search engines, etc.) \
-- Right now there is no other services but in future will be adding sidekiq and Elastic search servers for Background jobs and searching capabilities.
+### Start server locally:
+- Command: ``` bundle exec rails s ```
 
-### Deployment instructions \
+### Services (job queues, cache servers, search engines, etc.)
+- Right now there is no other services but in future will be adding sidekiq and Elastic search servers for Background jobs and searching capabilities.
+- Additionally, since I was not able to get free redis hosting there is no caching of the bearer token. Else bearer token in application controller will be cached for 2-3 minutes
+
+### Deployment instructions:
 - The Application is already deployed to https://homey-assignment.onrender.com/login
   ``` admin_username: user admin_password: password ```
 - For other roles, please utilize the seeds.rb file to login as other users.
