@@ -1,0 +1,19 @@
+doctype html
+html
+  head
+    title Homey Project Management System
+    meta name="viewport" content="width=device-width,initial-scale=1"
+    = csrf_meta_tags
+    = csp_meta_tag
+    script src="https://cdn.tailwindcss.com"
+    = javascript_importmap_tags
+  body.bg-gray-50.min-h-screen.flex.items-center.justify-center
+    .max-w-md.w-full.space-y-8
+      - if notice
+        .p-4.bg-green-100.border.border-green-400.text-green-700.rounded
+          = notice
+      - if alert
+        .p-4.bg-red-100.border.border-red-400.text-red-700.rounded
+          = alert
+      
+      = yield

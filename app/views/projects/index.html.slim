@@ -1,0 +1,93 @@
+.max-w-7xl.mx-auto.px-4.sm:px-6.lg:px-8.py-6
+  / Header Section
+  .mb-6
+    .flex.items-center.justify-between
+      .flex.items-center.space-x-2
+        h1.text-2xl.font-semibold.text-gray-900 Projects
+      = link_to "Add Project", new_project_path, class: "bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-md text-sm font-medium"
+
+  / Status Tabs - Updated to show 'New' but link to 'draft'
+.mb-6 data-controller="tabs"
+  nav.flex.space-x-8.border-b.border-gray-200
+    / New tab (maps to draft status)
+    = link_to projects_path(status: 'new'), class: "px-4 py-2 rounded-md text-sm font-medium #{params[:status] == 'new' ? 'bg-white text-blue-600 shadow' : 'text-gray-600 hover:text-gray-900'}"
+        | New 
+        span.ml-1.px-2.py-1.text-xs.bg-gray-200.rounded-full = @status_counts['new'] || 0
+
+    
+    / Other status tabs
+     = link_to projects_path(status: 'active'), class: "px-4 py-2 rounded-md text-sm font-medium #{params[:status] == 'active' ? 'bg-white text-blue-600 shadow' : 'text-gray-600 hover:text-gray-900'}"
+       | Active 
+       span.ml-1.px-2.py-1.text-xs.bg-gray-200.rounded-full = @status_counts['active'] || 0
+      
+    = link_to projects_path(status: 'on_boarding'), class: "px-4 py-2 rounded-md text-sm font-medium #{params[:status] == 'on_boarding' ? 'bg-white text-blue-600 shadow' : 'text-gray-600 hover:text-gray-900'}"
+      | Onboarding 
+      span.ml-1.px-2.py-1.text-xs.bg-gray-200.rounded-full = @status_counts['on_boarding'] || 0
+      
+    = link_to projects_path(status: 'on_hold'), class: "px-4 py-2 rounded-md text-sm font-medium #{params[:status] == 'on_hold' ? 'bg-white text-blue-600 shadow' : 'text-gray-600 hover:text-gray-900'}"
+      | On Hold 
+      span.ml-1.px-2.py-1.text-xs.bg-gray-200.rounded-full = @status_counts['on_hold'] || 0
+      
+    = link_to projects_path(status: 'rejected'), class: "px-4 py-2 rounded-md text-sm font-medium #{params[:status] == 'rejected' ? 'bg-white text-blue-600 shadow' : 'text-gray-600 hover:text-gray-900'}"
+      | Rejected 
+      span.ml-1.px-2.py-1.text-xs.bg-gray-200.rounded-full = @status_counts['rejected'] || 0
+      
+    = link_to projects_path(status: 'closed'), class: "px-4 py-2 rounded-md text-sm font-medium #{params[:status] == 'closed' ? 'bg-white text-blue-600 shadow' : 'text-gray-600 hover:text-gray-900'}"
+      | Closed 
+      span.ml-1.px-2.py-1.text-xs.bg-gray-200.rounded-full = @status_counts['closed'] || 0
+    
+    / All tab
+    = link_to projects_path, class: "px-4 py-2 rounded-md text-sm font-medium #{params[:status].blank? ? 'bg-white text-blue-600 shadow' : 'text-gray-600 hover:text-gray-900'}"
+        | All 
+        span.ml-1.px-2.py-1.text-xs.bg-gray-200.rounded-full = @status_counts['all'] || 0
+
+  / Search Section
+  .mb-6.flex.space-x-4 data-controller="search-filter"
+    = form_with url: projects_path, method: :get, local: true, class: "flex-1 flex space-x-4", data: { turbo_frame: "projects_table" } do |f|
+      = f.hidden_field :status, value: params[:status] if params[:status].present?
+      = f.text_field :search, placeholder: "Search projects...", value: params[:search], class: "flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+      = f.submit "Search", class: "bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-md text-sm font-medium"
+
+  / Projects Table
+  = turbo_frame_tag "projects_table" do
+    .bg-white.rounded-lg.shadow.overflow-hidden
+      .overflow-x-auto
+        table.min-w-full.divide-y.divide-gray-200
+          thead.bg-gray-50
+            tr
+              th.px-6.py-3.text-left.text-xs.font-medium.text-gray-500.uppercase.tracking-wider Name
+              th.px-6.py-3.text-left.text-xs.font-medium.text-gray-500.uppercase.tracking-wider Description
+              th.px-6.py-3.text-left.text-xs.font-medium.text-gray-500.uppercase.tracking-wider Status
+              th.px-6.py-3.text-left.text-xs.font-medium.text-gray-500.uppercase.tracking-wider Creator
+              th.px-6.py-3.text-left.text-xs.font-medium.text-gray-500.uppercase.tracking-wider Created
+          
+          tbody.bg-white.divide-y.divide-gray-200
+            - @projects.each do |project|
+              tr.hover:bg-gray-50.cursor-pointer data-controller="table-row" data-action="click->table-row#navigate" data-table-row-url-value=project_path(project)
+                td.px-6.py-4.whitespace-nowrap
+                  .font-medium.text-gray-900 = project.name
+                td.px-6.py-4
+                  .text-sm.text-gray-600 = truncate(project.description, length: 100)
+                td.px-6.py-4.whitespace-nowrap
+                  span.inline-flex.px-2.py-1.text-xs.font-semibold.rounded-full class=project.status_color
+                    = project.status.humanize
+                td.px-6.py-4.whitespace-nowrap.text-sm.text-gray-900
+                  = project.creator.display_name
+                td.px-6.py-4.whitespace-nowrap.text-sm.text-gray-500
+                  = project.created_at.strftime("%b %d, %Y")
+    
+    / Pagination
+    - if @projects.respond_to?(:current_page)
+      .px-6.py-3.bg-gray-50.border-t.flex.items-center.justify-between
+        .text-sm.text-gray-700
+          | Showing #{@projects.offset_value + 1} to #{[@projects.offset_value + @projects.limit_value, @projects.total_count].min} of #{@projects.total_count} results
+        
+        .flex.space-x-2
+          - if @projects.prev_page
+            = link_to "Previous", projects_path(page: @projects.prev_page, status: params[:status], search: params[:search]), class: "px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-50", data: { turbo_frame: "projects_table" }
+          
+          - @projects.page_range.each do |page|
+            = link_to page, projects_path(page: page, status: params[:status], search: params[:search]), class: "px-3 py-1 text-sm #{page == @projects.current_page ? 'bg-purple-600 text-white' : 'bg-white text-gray-700'} border border-gray-300 rounded hover:bg-gray-50", data: { turbo_frame: "projects_table" }
+          
+          - if @projects.next_page
+            = link_to "Next", projects_path(page: @projects.next_page, status: params[:status], search: params[:search]), class: "px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-50", data: { turbo_frame: "projects_table" }

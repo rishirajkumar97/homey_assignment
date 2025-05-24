@@ -1,0 +1,13 @@
+//= link_tree ../images
+//= link application.js
+//= link application.css
+//= link controllers/application.js
+//= link controllers/auth_form_controller.js
+//= link controllers/dropdown_controller.js
+//= link controllers/hello_controller.js
+//= link controllers/project_detail_controller.js
+//= link controllers/search_filter_controller.js
+//= link controllers/table_row_controller.js
+//= link controllers/index.js
+//= link_tree ../../javascript .js
+//= link_tree ../../../vendor/javascript .js
