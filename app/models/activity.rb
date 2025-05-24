@@ -31,9 +31,9 @@ class Activity < ApplicationRecord
   
   def icon_class
     case type
-    when 'Comment'
+    when 'Activity::Comment'
       'chat-bubble-left'
-    when 'AuditLog'
+    when 'Activity::AuditLog'
       'clock'
     else
       'document-text'
@@ -58,7 +58,7 @@ class Activity < ApplicationRecord
   end
   
   def can_be_edited_by?(user)
-    return false if type == 'AuditLog' # Audit logs shouldn't be editable
+    return false if type == 'Activity::AuditLog' # Audit logs shouldn't be editable
     return true if user.admin?
     creator == user
   end
