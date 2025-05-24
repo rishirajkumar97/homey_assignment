@@ -15,25 +15,36 @@ Things you may want to cover:
 - Postgresgql@14(local,test) or cockroachdb (for production)
 
 
-* Configuration \
+### Configuration \
 - Install ruby via rvm with command ```rvm install ruby-3.2.2```
 
 
-* Database creation \
+### Database creation \
 - Command: ``` rails db:create ```
 
-* Database initialization \
+### Database initialization \
 - Command: ``` rails db:migrate; rails db:seed; ```
 
-* How to run the test suite \
+### How to run the test suite \
 - Command: ``` bundle exec rspec ```
 
-* Services (job queues, cache servers, search engines, etc.) \
+### Services (job queues, cache servers, search engines, etc.) \
 - Right now there is no other services but in future will be adding sidekiq and Elastic search servers for Background jobs and searching capabilities.
 
-* Deployment instructions \
+### Deployment instructions \
 - The Application is already deployed to https://homey-assignment.onrender.com/login
   ``` admin_username: user admin_password: password ```
-        
+- Further Plan was to setup a Github CI action to combine it with render workflow to ensure based on merge to main production gets deployed.
 
-* ...
+### Screenshots:
+![alt text](image.png)
+
+![alt text](image-1.png)
+
+![alt text](image-2.png)
+
+![alt text](image-3.png)
+
+![alt text](image-4.png)
+
+![alt text](image-5.png)
