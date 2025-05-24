@@ -11,6 +11,8 @@ rescue ActiveRecord::PendingMigrationError => e
   abort e.to_s.strip
 end
 
+Dir[Rails.root.join('spec', 'support', '**', '*.rb')].sort.each { |f| require f }
+
 RSpec.configure do |config|
   config.use_transactional_fixtures = true
   config.infer_spec_type_from_file_location!
@@ -20,8 +22,8 @@ RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
   
   # Authentication helpers
-  # config.include AuthHelpers, type: :controller
-  # config.include AuthHelpers, type: :request
+  config.include AuthHelpers, type: :controller
+  config.include AuthHelpers, type: :request
 end
 
 Shoulda::Matchers.configure do |config|
