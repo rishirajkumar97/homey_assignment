@@ -5,20 +5,35 @@ application up and running.
 
 Things you may want to cover:
 
-* Ruby version
+* Ruby version - 3.2.2
+# Local Setup
 
-* System dependencies
+## System dependencies
 
-* Configuration
+- Ruby 3.2.2
+- Rails 7.2
+- Postgresgql@14(local,test) or cockroachdb (for production)
 
-* Database creation
 
-* Database initialization
+* Configuration \
+- Install ruby via rvm with command ```rvm install ruby-3.2.2```
 
-* How to run the test suite
 
-* Services (job queues, cache servers, search engines, etc.)
+* Database creation \
+- Command: ``` rails db:create ```
 
-* Deployment instructions
+* Database initialization \
+- Command: ``` rails db:migrate; rails db:seed; ```
+
+* How to run the test suite \
+- Command: ``` bundle exec rspec ```
+
+* Services (job queues, cache servers, search engines, etc.) \
+- Right now there is no other services but in future will be adding sidekiq and Elastic search servers for Background jobs and searching capabilities.
+
+* Deployment instructions \
+- The Application is already deployed to https://homey-assignment.onrender.com/login
+  ``` admin_username: user admin_password: password ```
+        
 
 * ...
