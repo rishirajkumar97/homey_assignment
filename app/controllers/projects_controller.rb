@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-  def index
+  def index # 2 db queries to retrieve data
     @projects = Project.includes(:creator)
     
     # Filter by status if provided - Updated to handle 'new' -> 'draft' mapping
