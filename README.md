@@ -53,7 +53,7 @@
 
 ### Deployment instructions:
 - The Application is already deployed to https://homey-assignment.onrender.com/login
-  ``` admin_username: user admin_password: password ```
+  ``` admin_username: admin admin_password: password ```
 - For other roles, please utilize the seeds.rb file to login as other users.
 - Further Plan was to setup a Github CI action to combine it with render workflow to ensure based on merge to main production gets deployed.
 
